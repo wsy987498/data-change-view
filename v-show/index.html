@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>v-show</title>
-</head>
-<body>
-   
-</body>
+  </head>
+
+  <body>
+    <button id="showBtn">show</button>
+    <button id="hideBtn">hide</button>
+
+    <div v-show="visible">show content.</div>
+    <script>
+      // init state & view
+      const model = { visible: true }
+
+      const view = document.querySelector('div')
+      const showBtn = document.querySelector('#showBtn')
+      const hideBtn = document.querySelector('#hideBtn')
+
+      showBtn.addEventListener('click', () => (model.visible = true))
+      hideBtn.addEventListener('click', () => (model.visible = false))
+
+      // change view methods
+      const updateViewFunc = value => {
+        view.style.display = value ? '' : 'none'
+      }
+
+      // set init view state
+      const directiveKey = view.getAttribute('v-show')
+      updateViewFunc(model[directiveKey])
+
+      // watch data change view
+      Object.defineProperty(model, 'visible', {
+        set: val => {
+          updateViewFunc(val)
+        },
+      })
+    </script>
+  </body>
 </html>
